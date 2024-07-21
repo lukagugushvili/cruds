@@ -42,4 +42,18 @@ export class UsersService {
 
     return findDeletedUser;
   }
+
+  createNewUser(user: DataTypes) {
+    const lastId = this.users[this.users.length - 1].id;
+    const id = lastId ? lastId + 1 : 1;
+
+    const newUser = {
+      id,
+      ...user,
+    };
+
+    this.users.push(newUser);
+
+    return newUser;
+  }
 }

@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { DataTypes } from './types/dataType';
 import { data } from './data/data';
 
 @Injectable()
@@ -24,5 +25,21 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  deleteUser(id: number) {
+    const deleteUser = this.users.filter((user) => user.id !== id);
+    const findDeletedUser = this.users.find((user) => user.id === id);
+
+    if (!findDeletedUser) {
+      throw new HttpException(
+        `User with id: ${id} does not exist`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    this.users = deleteUser;
+
+    return findDeletedUser;
   }
 }

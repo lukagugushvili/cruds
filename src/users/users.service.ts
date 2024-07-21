@@ -56,4 +56,19 @@ export class UsersService {
 
     return newUser;
   }
+
+  changeUserValues(id: number, user: DataTypes) {
+    const findIndex = this.users.findIndex((user) => user.id === id);
+
+    if (findIndex === -1) {
+      throw new HttpException(`User not found`, HttpStatus.NOT_FOUND);
+    }
+
+    this.users[findIndex] = {
+      ...this.users[findIndex],
+      ...user,
+    };
+
+    return this.users[findIndex];
+  }
 }
